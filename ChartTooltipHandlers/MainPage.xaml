@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:ChartTooltipHandlers"
+             xmlns:chart="clr-namespace:Syncfusion.Maui.Charts;assembly=Syncfusion.Maui.Charts"
+             xmlns:custom="clr-namespace:ChartTooltipHandlers.Custom"
+             x:Class="ChartTooltipHandlers.MainPage">
+    <ContentPage.BindingContext>
+        <local:ChartViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <Style x:Key="CustomButtonStyle" TargetType="local:CustomButton">
+            <Setter Property="ImageSource" Value="close.png"/>
+            <Setter Property="WidthRequest" Value="24"/>
+            <Setter Property="HeightRequest" Value="24"/>
+            <Setter Property="BackgroundColor" Value="Transparent"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="ContentLayout" Value="Left, 0"/>
+            <Setter Property="Tint" Value="Orange"/>
+        </Style>
+
+        <DataTemplate x:Key="Itemtemplate">
+            <local:CustomButton Style="{StaticResource CustomButtonStyle}" />
+        </DataTemplate>
+
+        <DataTemplate x:Key="TooltipTemplate">
+                        <Grid Background="{Binding Background}"  InputTransparent="False" RowDefinitions="Auto, Auto"
+  ColumnDefinitions="Auto, Auto, Auto">
+            <Label Text="X: "/>
+            <Label Grid.Column="1" Text="{Binding X}"/>
+            <Label Grid.Row="1" Text="Y: "/>
+            <Label Grid.Row="1" Grid.Column="1" Text="{Binding Y}"/>
+            <local:CustomButton Grid.RowSpan="3" 
+                        Grid.Column="2" 
+                        Style="{StaticResource CustomButtonStyle}"/>
+        </Grid>
+        </DataTemplate>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="2*, 8*" x:Name="grid">
+
+        <HorizontalStackLayout>
+            <local:CustomButton HorizontalOptions="Start" Style="{StaticResource CustomButtonStyle}"/>
+
+            <Button Clicked="Button_Clicked" Text="Click" />
+        </HorizontalStackLayout>
+
+        <custom:CustomControl Grid.Row="1" x:Name="customControl">
+            <custom:CustomControl.Title>
+                <Grid Background="{Binding Background}" HorizontalOptions="Center"
+                        RowDefinitions="Auto, Auto"
+                        ColumnDefinitions="Auto, Auto, Auto">
+                    <Label Text="X: "/>
+                    <Label Grid.Column="1" Text="Chart Title"/>
+                    <Label Grid.Row="1" Text="Y: "/>
+                    <Label Grid.Row="1" Grid.Column="1" Text="2000"/>
+                    <local:CustomButton Grid.RowSpan="3" 
+                      Grid.Column="2" 
+                      Style="{StaticResource CustomButtonStyle}"/>
+                </Grid>
+            </custom:CustomControl.Title>
+        </custom:CustomControl>
+
+    </Grid>
+
+</ContentPage>
